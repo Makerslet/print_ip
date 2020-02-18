@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-add_executable(print_ip    main.cpp)
+add_executable(print_ip		main.cpp to_string.h)
 
 # включаем 14 стандарт для наших целей
 set_target_properties(print_ip PROPERTIES
