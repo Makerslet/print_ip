@@ -3,12 +3,19 @@
 
 #include <string>
 #include <iostream>
+#include <exception>
 #include <type_traits>
 
-template <typename T>
+template <typename T,
+          typename Fake =
+          typename std::enable_if<std::is_integral<T>::value>::type
+          >
 unsigned char get_byte(const T& value, std::size_t position) {
 
     std::size_t element_size = sizeof (T);
+    if(position >= element_size)
+        throw std::invalid_argument("wrong position");
+
     std::size_t shift_size = 8 * ((element_size - 1) - position);
     T copy = value >> shift_size;
 
