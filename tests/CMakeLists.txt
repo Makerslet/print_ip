@@ -39,4 +39,4 @@ else ()
     )
 endif()
 
-add_test(test_print_ip test_print_ip)
+add_test(test_print_ip bin/test_print_ip)
