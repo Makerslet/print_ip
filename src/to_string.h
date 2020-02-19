@@ -2,34 +2,17 @@
 #define TO_STRING_H
 
 #include <string>
-#include <iostream>
-#include <exception>
+#include <sstream>
 #include <type_traits>
+#include "utils.h"
 
-template <typename T,
-          typename Fake =
-          typename std::enable_if<std::is_integral<T>::value>::type
-          >
-unsigned char get_byte(const T& value, std::size_t position) {
 
-    std::size_t element_size = sizeof (T);
-    if(position >= element_size)
-        throw std::invalid_argument("wrong position");
-
-    std::size_t shift_size = 8 * ((element_size - 1) - position);
-    T copy = value >> shift_size;
-
-    return  copy & 0xFF;
-}
-
-template <typename T,
-          typename Fake =
-          typename std::enable_if<std::is_integral<T>::value>::type
-          >
-std::string to_string(const T& arg) {
+template <typename Integral>
+typename std::enable_if<std::is_integral<Integral>::value, std::string>::type
+to_string(const Integral& arg) {
 
     std::string result;
-    std::size_t element_size = sizeof (T);
+    std::size_t element_size = sizeof (Integral);
 
     for(std::size_t i = 0; i < element_size; ++i) {
 
@@ -38,8 +21,30 @@ std::string to_string(const T& arg) {
             result.push_back('.');
     }
 
-    std::cout << "result: " << result << std::endl;
     return result;
 }
+
+template <typename Container>
+decltype (
+        std::begin(std::declval<Container>()),
+        std::end(std::declval<Container>()),
+        std::string()
+        ) to_string(const Container& arg) {
+
+    std::stringstream ss;
+    std::size_t index = 0;
+    for(const auto& elem : arg) {
+        ss << elem;
+        if(index++ < (arg.size() - 1))
+            ss << '.';
+    }
+
+    return ss.str();
+}
+
+std::string to_string(const std::string& arg) {
+    return arg;
+}
+
 
 #endif // TO_STRING_H
