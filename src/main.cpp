@@ -14,7 +14,7 @@ int main (int, char **)
     int i = 2130706433;
     std::cout << to_string(i) << std::endl;
 
-    long l = 8875824491850138409;
+    long long l = 8875824491850138409;
     std::cout << to_string(l) << std::endl;
 
     std::string str = "12.34.56.78";
