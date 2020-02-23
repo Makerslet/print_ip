@@ -104,3 +104,16 @@ TEST(STRING, STRING)
     ASSERT_EQ(to_string(s1), std::string());
     ASSERT_EQ(to_string(s2), std::string("1.2.3.4"));
 }
+
+TEST(TUPLE, INT_STRING)
+{
+    std::tuple<int> t1(10);
+	std::tuple<int, int, int, int> t2(11, 12, 13, 14);
+	std::tuple<std::string> t3("15");
+	std::tuple<std::string, std::string, std::string> t4("16", "17", "18");
+
+    ASSERT_EQ(to_string(t1), std::string("10"));
+    ASSERT_EQ(to_string(t2), std::string("11.12.13.14"));
+	ASSERT_EQ(to_string(t3), std::string("15"));
+	ASSERT_EQ(to_string(t4), std::string("16.17.18"));
+}
