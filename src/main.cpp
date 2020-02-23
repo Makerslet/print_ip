@@ -1,7 +1,9 @@
 #include "to_string.h"
+
 #include <iostream>
 #include <vector>
 #include <list>
+#include <tuple>
 
 int main (int, char **)
 {
@@ -25,6 +27,9 @@ int main (int, char **)
 
     std::vector<int> list{5, 6, 7, 8};
     std::cout << to_string(list) << std::endl;
+
+    std::tuple<int, int, int, int> tp(1, 2, 3, 4);
+    std::cout << to_string(tp) << std::endl;
 
     return 0;
 }

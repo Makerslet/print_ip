@@ -1,11 +1,13 @@
 #ifndef TO_STRING_H
 #define TO_STRING_H
 
+#include "utils.h"
+
+
 #include <string>
 #include <sstream>
 #include <type_traits>
-#include "utils.h"
-
+#include <tuple>
 
 template <typename Integral>
 typename std::enable_if<std::is_integral<Integral>::value, std::string>::type
@@ -45,6 +47,15 @@ decltype (
 std::string to_string(const std::string& arg) {
     return arg;
 }
+
+template <typename ... Args>
+typename std::enable_if<are_same<Args...>::value, std::string>::type
+to_string(const std::tuple<Args...> arg)
+{
+    return tuple_to_string<std::tuple<Args...>,
+            sizeof... (Args)>::convert(arg);
+}
+
 
 
 #endif // TO_STRING_H
