@@ -6,11 +6,16 @@
 #include <sstream>
 #include <tuple>
 
-template <typename Integral,
-          typename Fake =
-          typename std::enable_if<std::is_integral<Integral>::value>::type
-          >
-unsigned char get_byte(const Integral& value, std::size_t position) {
+/**
+ * @brief Return concrete byte value from integral value
+ *
+ * @arg value integral value
+ * @arg position byte number
+ * @return byte value
+ */
+template <typename Integral>
+typename std::enable_if<std::is_integral<Integral>::value, unsigned char>::type
+get_byte(const Integral& value, std::size_t position) {
 
     std::size_t element_size = sizeof (Integral);
     if(position >= element_size)
@@ -22,6 +27,11 @@ unsigned char get_byte(const Integral& value, std::size_t position) {
     return  copy & 0xFF;
 }
 
+/**
+ * @brief Check if all passed types are same
+ *
+ * @return true if all types are same
+ */
 template <class ...T>
 struct are_same;
 
@@ -37,6 +47,13 @@ struct are_same<A>
     static const bool value = true;
 };
 
+
+/**
+ * @brief Recursive convertion std::tuple to IP formatted string
+ *
+ * @arg tuple
+ * @return IP formatted string
+ */
 template <typename Tuple, std::size_t Index>
 struct tuple_to_string {
 
